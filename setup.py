@@ -25,6 +25,7 @@ setup(
     install_requires=[
         'requests>=2.5.1',
         'beautifulsoup4',
+        'python-dateutil',
     ],
     classifiers=[
         'Development Status :: 1 - Planning',
