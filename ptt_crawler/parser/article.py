@@ -23,7 +23,7 @@ META_NAMES = {
 
 def parse(html):
     data = {}
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, "html.parser")
     main = soup.find(id="main-content")
 
     for node in main.contents:

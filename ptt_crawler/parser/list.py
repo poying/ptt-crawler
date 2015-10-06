@@ -6,7 +6,7 @@ __all__ = ("parse")
 
 
 def parse(html):
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, "html.parser")
     url = parse_prev_page_url(soup)
 
     if url is None:
