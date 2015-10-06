@@ -21,7 +21,7 @@ command:
 	@$(CMD) $(ARGS)
 
 lint:
-	@flake8 pttparser
+	@flake8 ptt_crawler
 
 release:
 	python setup.py register
