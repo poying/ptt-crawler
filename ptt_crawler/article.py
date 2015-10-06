@@ -10,7 +10,7 @@ class Article:
     def __init__(self, path, board):
         self.path = path
         self.board = board
-        self.data = {}
+        self.data = self.board.get_data(self.path)
 
     def readable(self):
         return self.data.get("meta")
@@ -52,6 +52,3 @@ class Article:
     def get_meta_data(self, key, defval=None):
         meta = self.data.get("meta", {})
         return meta.get(key, defval)
-
-    def fetch(self):
-        self.data = self.board.get_data(self.path)
