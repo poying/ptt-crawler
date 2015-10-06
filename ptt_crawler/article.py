@@ -12,9 +12,6 @@ class Article:
         self.board = board
         self.data = self.board.get_data(self.path)
 
-    def readable(self):
-        return self.data.get("meta")
-
     @property
     def id(self):
         match = PARSE_ID.search(self.path)
@@ -23,6 +20,10 @@ class Article:
     @property
     def url(self):
         return self.board.get_url(self.path)
+
+    @property
+    def meta(self):
+        return self.data.get("meta", {})
 
     @property
     def title(self):
@@ -47,7 +48,11 @@ class Article:
 
     @property
     def content(self):
-        return self.data.get("content")
+        return self.data.get("content", {})
+
+    @property
+    def comments(self):
+        return self.data.get("comments", {})
 
     def get_meta_data(self, key, defval=None):
         meta = self.data.get("meta", {})
