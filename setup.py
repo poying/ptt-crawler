@@ -1,8 +1,3 @@
-try:
-    import multiprocessing
-except ImportError:
-    pass
-
 import re
 from setuptools import setup
 
