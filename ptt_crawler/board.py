@@ -26,23 +26,26 @@ class Board:
     def get_data(self, url):
         url = self.get_url(url)
         parse = routes(url)
+        if parse is None:
+            raise Exception(UNKNOWN_PAGE_MESSAGE.format(url=url))
 
         while True:
-            r = requests.get(url, verify=self.verify, cookies=self.cookies)
-
-            if parse is None:
-                raise Exception(UNKNOWN_PAGE_MESSAGE.format(url=url))
-
-            if r.status_code == 503:
+            try:
+                r = requests.get(url, verify=self.verify, cookies=self.cookies)
+            except requests.exceptions.ConnectionError:
                 time.sleep(2)
                 continue
+            else:
+                if r.status_code == 503:
+                    time.sleep(2)
+                    continue
 
-            if r.status_code is not 200:
-                msg = REQUEST_FAILED_MESSAGE\
-                    .format(url=url, status=r.status_code)
-                raise Exception(msg)
+                if r.status_code is not 200:
+                    msg = REQUEST_FAILED_MESSAGE.format(url=url,
+                                                        status=r.status_code)
+                    raise Exception(msg)
 
-            break
+                break
 
         return parse(r.text)
 
