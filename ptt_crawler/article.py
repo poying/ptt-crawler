@@ -36,7 +36,7 @@ class Article:
     @property
     def time(self):
         time = self.get_meta_data("time")
-        return parseTime(time) if time else None
+        return parseTime(time)
 
     @property
     def type(self):
