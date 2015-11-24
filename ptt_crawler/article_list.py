@@ -35,11 +35,12 @@ class ArticleList:
             raise Exception(NO_MORE_DATA_MESSAGE)
 
         count = 0
-        data = None
-        page_url = self.page_url
 
-        while count is 0:
-            data = self.board.get_data(page_url)
+        while count == 0:
+            try:
+                data = self.board.get_data(self.page_url)
+            except:
+                data = None
 
             if data is None:
                 self.at_last_page = True
