@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import re
 from bs4 import BeautifulSoup
 
 __all__ = ("parse")
+
+PREV_PAGE_BTN = re.compile(u".*上頁.*", re.UNICODE)
 
 
 def parse(html):
@@ -19,13 +22,13 @@ def parse(html):
 
 
 def parse_prev_page_url(soup):
-    links = soup.select(".action-bar .pull-right .btn")
+    links = soup.select("a.btn.wide")
     url = None
 
-    try:
-        url = links[1].get("href")
-    except:
-        pass
+    for link in links:
+        match = PREV_PAGE_BTN.match(link.getText())
+        if match is not None:
+            url = link.get("href")
 
     return url
 
