@@ -8,7 +8,7 @@ from ptt_crawler import Board
 
 board = Board("mobile-game", verify=False)
 
-for article in board.articles(content=True):
+for article in board.articles(autoload=True):
     print(article.title)
 ```
 

@@ -6,8 +6,9 @@ NO_MORE_DATA_MESSAGE = "No more data!"
 
 
 class ArticleList:
-    def __init__(self, board):
+    def __init__(self, board, autoload):
         self.board = board
+        self.autoload = autoload
         self.reset()
 
     def __iter__(self):
@@ -28,7 +29,11 @@ class ArticleList:
         article_url = self.buffer[self.buffer_cursor]
         self.buffer_cursor += 1
 
-        return Article(article_url, self.board)
+        article = Article(self.board, article_url)
+        if self.autoload:
+            article.load()
+
+        return article
 
     def next_page(self):
         if self.at_last_page:

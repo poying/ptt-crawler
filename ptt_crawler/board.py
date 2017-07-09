@@ -4,6 +4,7 @@ import re
 import time
 import requests
 from .parser import routes
+from .article import Article
 from .article_list import ArticleList
 
 BASE_URL = "https://www.ptt.cc"
@@ -20,8 +21,11 @@ class Board:
         self.verify = verify
         self.cookies = dict(over18="1")
 
-    def articles(self):
-        return ArticleList(self)
+    def articles(self, autoload=False):
+        return ArticleList(self, autoload)
+
+    def article(self, url):
+        return Article(self, url)
 
     def get_data(self, url):
         url = self.get_url(url)

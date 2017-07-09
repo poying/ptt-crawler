@@ -7,10 +7,10 @@ PARSE_ID = re.compile("((?:\w+\.){3}\w+)")
 
 
 class Article:
-    def __init__(self, path, board):
+    def __init__(self, board, path):
         self.path = path
         self.board = board
-        self.data = self.board.get_data(self.path)
+        self.data = {}
 
     @property
     def id(self):
@@ -57,3 +57,6 @@ class Article:
     def get_meta_data(self, key, defval=None):
         meta = self.data.get("meta", {})
         return meta.get(key, defval)
+
+    def load(self):
+        self.data = self.board.get_data(self.path)
