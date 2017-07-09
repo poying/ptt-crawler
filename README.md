@@ -9,7 +9,7 @@ from ptt_crawler import Board
 board = Board("mobile-game", verify=False)
 
 for article in board.articles(content=True):
-    print(article["meta"]["title"])
+    print(article.title)
 ```
 
 ## API
