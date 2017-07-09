@@ -16,9 +16,11 @@ PATH_WITH_BOARD_NAME = re.compile("^\/bbs\/(?:.+)\/")
 
 
 class Board:
-    def __init__(self, name="undefined", verify=True):
+    def __init__(self, name="undefined", verify=True, max_attempts=0, attempt_delay=2):
         self.name = name
         self.verify = verify
+        self.max_attempts = max_attempts
+        self.attempt_delay = attempt_delay
         self.cookies = dict(over18="1")
 
     def articles(self, autoload=False):
@@ -32,24 +34,26 @@ class Board:
         parse = routes(url)
         if parse is None:
             raise Exception(UNKNOWN_PAGE_MESSAGE.format(url=url))
+        attempts = 0
 
-        while True:
+        while attempts <= self.max_attempts:
             try:
                 r = requests.get(url, verify=self.verify, cookies=self.cookies)
             except requests.exceptions.ConnectionError:
-                time.sleep(2)
+                attempts = attempts + 1
+                time.sleep(self.attempt_delay)
                 continue
-            else:
-                if r.status_code == 503:
-                    time.sleep(2)
-                    continue
 
-                if r.status_code is not 200:
-                    msg = REQUEST_FAILED_MESSAGE.format(url=url,
-                                                        status=r.status_code)
-                    raise Exception(msg)
+            if r.status_code >= 500 and r.status_code < 600:
+                attempts = attempts + 1
+                time.sleep(self.attempt_delay)
+                continue
 
-                break
+            if r.status_code is not 200:
+                msg = REQUEST_FAILED_MESSAGE.format(url=url, status=r.status_code)
+                raise Exception(msg)
+
+            break
 
         return parse(r.text)
 
