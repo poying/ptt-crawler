@@ -9,8 +9,7 @@ class Pages:
         self.limit = limit
         self.page = 0
         self.at_last_page = False
-        self.prev_page_url = 'https://www.ptt.cc/bbs/{}/index.html'.format(
-            self.board)
+        self.prev_page_url = 'https://www.ptt.cc/bbs/{}/index.html'.format(self.board)
 
     async def __aiter__(self):
         return self
@@ -28,7 +27,6 @@ class Pages:
         res = await self.fetcher.fetch(url)
         data = parse(url, res)
         self.page = self.page + 1
-        self.prev_page_url = 'https://www.ptt.cc{}'.format(
-            data.get('prev_page_url', None))
+        self.prev_page_url = 'https://www.ptt.cc{}'.format(data.get('prev_page_url', None))
         links = map(lambda path: 'https://www.ptt.cc{}'.format(path), data.get('article_list', []))
         return Page(url, links=links)

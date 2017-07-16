@@ -58,11 +58,12 @@ class Consumer(metaclass=ABCMeta):
 
     def run(self):
         tornado.platform.asyncio.AsyncIOMainLoop().install()
-        reader = nsq.Reader(message_handler=self._handle,
-                            nsqd_tcp_addresses=self.nsqd,
-                            topic=self.topic,
-                            channel=self.channel,
-                            max_in_flight=self.workers)
+        reader = nsq.Reader(
+            message_handler=self._handle,
+            nsqd_tcp_addresses=self.nsqd,
+            topic=self.topic,
+            channel=self.channel,
+            max_in_flight=self.workers)
         executor = ThreadPoolExecutor(max_workers=self.workers)
         loop = asyncio.get_event_loop()
         loop.set_default_executor(executor)

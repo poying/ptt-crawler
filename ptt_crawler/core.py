@@ -15,8 +15,7 @@ __all__ = ['Page', 'Pages', 'Board', 'Fetcher', 'crawl']
 logger = logging.getLogger(ptt_crawler.__name__)
 
 
-def crawl(board, page_limit=10, retry=10, retry_timeout=1,
-          topic='ptt_crawler', nsqd=['127.0.0.1:4150'], verbose=False):
+def crawl(board, page_limit=10, retry=10, retry_timeout=1, topic='ptt_crawler', nsqd=['127.0.0.1:4150'], verbose=False):
     '''
     options:
         --page-limit=<int>

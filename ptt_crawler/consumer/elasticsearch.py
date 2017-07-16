@@ -4,8 +4,15 @@ from elasticsearch import Elasticsearch
 
 
 class ElasticsearchConsumer(Consumer):
-    def __init__(self, index='ptt', doc_type='article', addresses=[
-                 '127.0.0.1:80'], auth=None, verify=False, *args, **kwargs):
+    def __init__(
+            self,
+            index='ptt',
+            doc_type='article',
+            addresses=['127.0.0.1:80'],
+            auth=None,
+            verify=False,
+            *args,
+            **kwargs):
         super(ElasticsearchConsumer, self).__init__(*args, **kwargs)
         hosts = map(parse_address, addresses)
         self.es = Elasticsearch(hosts=hosts, auth=auth, verify_certs=verify)
