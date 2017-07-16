@@ -1,11 +1,10 @@
 import re
-import ptt_crawler
 from setuptools import setup, find_packages
 
 
 setup(
     name='ptt_crawler',
-    version=ptt_crawler.__version__,
+    version='2.0.0',
     url='https://github.com/poying/ptt-crawler',
     license='MIT',
     author='Po-Ying Chen, M157q',
