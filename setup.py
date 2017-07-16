@@ -14,6 +14,7 @@ setup(
     scripts=['bin/ptt'],
     platforms='any',
     install_requires=[
+        'pynsq',
         'clime',
         'tornado',
         'elasticsearch',
