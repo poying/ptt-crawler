@@ -1,3 +1,8 @@
 -r requirements.txt
 
+sure
+nose
 flake8
+autopep8
+asynctest
+nose-mocha-reporter

@@ -1,3 +1,7 @@
-requests==2.5.1
+pynsq
+clime
+tornado
+requests
+elasticsearch
 python-dateutil
 beautifulsoup4
