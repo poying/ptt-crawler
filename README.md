@@ -31,4 +31,19 @@ class CustomConsumer(Consumer):
     async def process(self, id, url, data):
         # custom logic
         pass
+
+consumer = CustomConsumer()
+consumer.run()
 ```
+
+## 開發
+
+1. 取得程式碼 `$ git clone git@github.com:poying/ptt-crawler.git`
+2. 切換目錄 `$ cd ptt-crawler`
+3. 建立乾淨的執行環境 `$ virtualenv --python=$(which python) .env`
+4. 進入執行環境 `$ source .env/bin/activate`
+5. 安裝相依套件 `$ pip install -r requirements.dev.txt`
+6. 在新的 branch 修改程式碼 `$ git checkout -b <branch_name>`
+7. ...寫扣 寫扣 寫扣...
+8. 整理程式碼風格 `$ make format`
+9. commit、push、發 PR
