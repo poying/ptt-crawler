@@ -6,6 +6,12 @@ ptt-crawler
 * Python 版本 >= `3.5`
 * nsqd service
 
+## 安裝
+
+```bash
+$ pip install git+https://github.com/poying/ptt-crawler.git
+```
+
 ## Quick start
 
 1. 爬文章列表並將 URL 存進 NSQ
@@ -47,3 +53,7 @@ consumer.run()
 7. ...寫扣 寫扣 寫扣...
 8. 整理程式碼風格 `$ make format`
 9. commit、push、發 PR
+
+## License
+
+MIT: https://poying.mit-license.org/
