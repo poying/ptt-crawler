@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+import requests
+from ptt_crawler.core import crawl
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
+import clime.now
+

@@ -1,23 +1,22 @@
 import re
-from setuptools import setup
+import ptt_crawler
+from setuptools import setup, find_packages
 
-with open('ptt_crawler/__init__.py') as f:
-    m = re.findall(r'__version__\s*=\s*"(.*)"', f.read())
-    version = m[0]
 
 setup(
     name='ptt_crawler',
-    version=version,
-    url='https://github.com/youmeb-lab/ptt-crawler',
+    version=ptt_crawler.__version__,
+    url='https://github.com/poying/ptt-crawler',
     license='MIT',
-    author='Po-Ying Chen, Jamie Yang',
+    author='Po-Ying Chen, M157q',
     author_email='poying.me@gmail.com',
-    packages=[
-        'ptt_crawler',
-        'ptt_crawler.parser',
-    ],
+    packages=find_packages(),
+    scripts=['bin/ptt'],
     platforms='any',
     install_requires=[
+        'clime',
+        'tornado',
+        'elasticsearch',
         'requests>=2.5.1',
         'beautifulsoup4',
         'python-dateutil',
@@ -27,11 +26,7 @@ setup(
         'Intended Audience :: Developers',
         'Natural Language :: Chinese (Traditional)',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ]
 )
