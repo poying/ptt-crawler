@@ -15,14 +15,14 @@ __all__ = ['Page', 'Pages', 'Board', 'Fetcher', 'crawl']
 logger = logging.getLogger(ptt_crawler.__name__)
 
 
-def crawl(board, page_limit=10, retry=10, retry_timeout=1, topic='ptt_crawler', nsqd=['127.0.0.1:4150'], verbose=False):
+def crawl(board, page_limit=10, retry=10, retry_timeout=1, topic='ptt_crawler', nsqd='127.0.0.1:4150', verbose=False):
     '''
     options:
         --page-limit=<int>
         --retry=<int>
         --retry-timeout=<float>
         --topic=<str>
-        --nsqd=<str>...
+        --nsqd=<str>
         -v, --verbose
     '''
     if verbose:
@@ -31,7 +31,7 @@ def crawl(board, page_limit=10, retry=10, retry_timeout=1, topic='ptt_crawler', 
     tornado.platform.asyncio.AsyncIOMainLoop().install()
     fetcher = Fetcher(retry=retry, retry_timeout=retry_timeout)
     board = Board(board, fetcher)
-    writer = nsq.Writer(nsqd)
+    writer = nsq.Writer(nsqd.split(','))
     producer = Producer(board, writer, topic)
     time.sleep(1)
     loop = asyncio.get_event_loop()
