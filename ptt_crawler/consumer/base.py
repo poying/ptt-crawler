@@ -18,7 +18,8 @@ class Consumer(metaclass=ABCMeta):
             self,
             fetcher=Fetcher(),
             workers=multiprocessing.cpu_count() * 2,
-            nsqd=['127.0.0.1:4150'],
+            nsqd=[],
+            nsqlookupd=[],
             retry=10,
             retry_timeout=60,
             topic='ptt_crawler',
@@ -27,6 +28,7 @@ class Consumer(metaclass=ABCMeta):
         self.retry_timeout = retry_timeout
         self.fetcher = fetcher
         self.nsqd = nsqd
+        self.nsqlookupd = nsqlookupd
         self.workers = workers
         self.channel = channel
 
@@ -58,9 +60,10 @@ class Consumer(metaclass=ABCMeta):
 
     def run(self):
         tornado.platform.asyncio.AsyncIOMainLoop().install()
-        reader = nsq.Reader(
+        nsq.Reader(
             message_handler=self._handle,
             nsqd_tcp_addresses=self.nsqd,
+            lookupd_http_addresses=self.nsqlookupd,
             topic=self.topic,
             channel=self.channel,
             max_in_flight=self.workers)
