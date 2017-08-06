@@ -8,7 +8,7 @@ class ElasticsearchConsumer(Consumer):
             self,
             index='ptt',
             doc_type='article',
-            addresses=['127.0.0.1:80'],
+            addresses=['localhost:9200'],
             auth=None,
             verify=False,
             *args,
@@ -30,5 +30,5 @@ class ElasticsearchConsumer(Consumer):
 
 def parse_address(address):
     parts = address.split(':', 1)
-    host, port = parts[0], parts[1:]
+    host, port = parts[0], parts[1]
     return {'host': host, 'port': port}

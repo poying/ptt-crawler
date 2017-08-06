@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='ptt_crawler',
-    version='2.1.1',
+    version='2.1.2',
     url='https://github.com/poying/ptt-crawler',
     license='MIT',
     author='Po-Ying Chen, M157q',
