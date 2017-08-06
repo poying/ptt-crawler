@@ -43,10 +43,10 @@ class Consumer(metaclass=ABCMeta):
             res = await self.fetcher.fetch(url)
             match = PARSE_ID.search(url)
             id = match and match.group(1)
-            data = parse(res)
+            data = parse(url, res)
             if id is None or data is None:
                 raise Exception('Failed to parse the article: {}'.format(res))
-            self.process(id, url, data)
+            await self.process(id, url, data)
             message.finish()
         except Exception as err:
             logger.warning('%s. Retry to process %s after %f second(s)',
