@@ -55,8 +55,8 @@ class Consumer(metaclass=ABCMeta):
 
     def _handle(self, message):
         message.enable_async()
-        loop = asyncio.get_event_loop()
-        loop.call_soon_threadsafe(asyncio.async, self._process(message))
+        message.touch()
+        asyncio.ensure_future(self._process(message))
 
     def run(self):
         tornado.platform.asyncio.AsyncIOMainLoop().install()

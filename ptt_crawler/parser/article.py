@@ -31,6 +31,16 @@ def parse(html):
         parse_node(node, data)
 
     data['content'] = data.get('content', '').strip()
+    meta = data.get('meta', {})
+    assert meta.get('time', None) is not None
+    assert meta.get('title', None) is not None
+    assert meta.get('board', None) is not None
+    assert meta.get('author', None) is not None
+
+    meta['time'] = dateutil.parser.parse(meta.get('time'))
+    comments = data.get('comments', [])
+    for comment in comments:
+        parse_comment_time(meta['time'], comment)
 
     return data
 
@@ -62,9 +72,6 @@ def parse_meta(node, context):
             meta['type'] = article_type
             meta['title'] = title
             meta['re'] = True if match.group(1) else False
-        
-        if key is 'time':
-            meta['time'] = dateutil.parser.parse(val)
 
         context['meta'] = meta
 
@@ -83,7 +90,7 @@ def parse_comment(node, context):
             comments.append({
                 'tag': tag[0].text.strip(),
                 'user': user[0].text.strip(),
-                'time': dateutil.parser.parse(time[0].text.strip()),
+                'time': time[0].text.strip(),
                 'content': get_comment_content(content[0]),
             })
             context['comments'] = comments
@@ -141,3 +148,7 @@ def has_class(node, *args):
     expect.insert(0, False)
     names = node.get('class', [])
     return reduce(lambda success, name: success or name in names, expect)
+
+def parse_comment_time(article_date, comment):
+    time_str = '{} {}'.format(article_date.year, comment.get('time', ''))
+    comment['time'] = dateutil.parser.parse(time_str)
