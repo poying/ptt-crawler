@@ -1,5 +1,6 @@
 import os
 import sure
+import dateutil.parser
 from unittest import TestCase
 from ptt_crawler.parser import parse
 from ptt_crawler.parser.exceptions import ParserNotFoundError
@@ -14,7 +15,7 @@ class ParserTest(TestCase):
                 'author': 'TyuzuChou (子瑜我老婆)',
                 'board': 'Beauty',
                 're': False,
-                'time': 'Wed Jul 12 00:32:12 2017',
+                'time': dateutil.parser.parse('Wed Jul 12 00:32:12 2017'),
                 'title': '橋本環奈',
                 'type': '正妹'
             })

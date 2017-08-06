@@ -5,6 +5,7 @@
 '''
 
 import re
+import dateutil.parser
 from functools import reduce
 from bs4 import BeautifulSoup
 
@@ -61,6 +62,9 @@ def parse_meta(node, context):
             meta['type'] = article_type
             meta['title'] = title
             meta['re'] = True if match.group(1) else False
+        
+        if key is 'time':
+            meta['time'] = dateutil.parser.parse(val)
 
         context['meta'] = meta
 
@@ -79,7 +83,7 @@ def parse_comment(node, context):
             comments.append({
                 'tag': tag[0].text.strip(),
                 'user': user[0].text.strip(),
-                'time': time[0].text.strip(),
+                'time': dateutil.parser.parse(time[0].text.strip()),
                 'content': get_comment_content(content[0]),
             })
             context['comments'] = comments
